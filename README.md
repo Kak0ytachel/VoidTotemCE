@@ -1,4 +1,11 @@
-# VoidTotem
+# VoidTotem Chel's Edition
+vibe-coded support for 1.21.11
+
+forked from [Rapha149/VoidTotem](https://github.com/Rapha149/VoidTotem)
+
+use at your own risk!!
+
+## VoidTotem
 
 A Minecraft plugin that enables you to use a totem to save you from the void.  
 You can even set a custom item and recipe for the totem!
