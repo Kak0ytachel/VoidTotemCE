@@ -1,23 +1,17 @@
 package de.rapha149.voidtotem.version;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.DynamicOpsNBT;
 import net.minecraft.nbt.MojangsonParser;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.resources.MinecraftKey;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingManager;
-import net.minecraft.world.item.crafting.IRecipe;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.SoundGroup;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_21_R5.CraftServer;
-import org.bukkit.craftbukkit.v1_21_R5.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_21_R7.inventory.CraftItemStack;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffectType;
 
@@ -49,10 +43,8 @@ public class Wrapper1_21_R5 implements VersionWrapper {
 
     @Override
     public void removeRecipe(NamespacedKey key) {
-        CraftingManager manager = ((CraftServer) Bukkit.getServer()).getServer().aI();
-        MinecraftKey minecraftKey = MinecraftKey.a(key.getNamespace(), key.getKey());
-        ResourceKey<IRecipe<?>> resourceKey = ResourceKey.a(Registries.bA, minecraftKey);
-        manager.removeRecipe(resourceKey);
+        // Use Bukkit API to avoid NMS changes across versions
+        Bukkit.removeRecipe(key);
     }
 
     @Override

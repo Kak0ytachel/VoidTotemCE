@@ -365,7 +365,18 @@ public class Config {
     }
 
     private static String colorize(String str) {
-        return SERIALIZER.serialize(MINI_MESSAGE.parse(ChatColor.translateAlternateColorCodes('&', str)));
+        // If the string looks like MiniMessage (contains tags), parse it as MiniMessage.
+        // Otherwise, treat it as legacy and support both '&' and '§' color codes.
+        try {
+            if (str != null && str.indexOf('<') != -1 && str.indexOf('>') != -1) {
+                return SERIALIZER.serialize(MINI_MESSAGE.deserialize(str));
+            }
+        } catch (Throwable ignored) {
+            // If MiniMessage parsing fails for any reason, fall through to legacy handling.
+        }
+        // Legacy path: allow '&' codes and already present '§' codes, including hex colors.
+        String withSection = ChatColor.translateAlternateColorCodes('&', str);
+        return SERIALIZER.serialize(LegacyComponentSerializer.legacySection().deserialize(withSection));
     }
 
     public boolean checkForUpdates = true;
